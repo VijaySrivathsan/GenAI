@@ -1,4 +1,4 @@
-from parser import load_all_pdfs
+from parser import load_all_documents
 from langchain_text_splitters import TokenTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 
@@ -37,7 +37,7 @@ def create_embeddings(chunks, embedding_model):
 
 if __name__ == "__main__":
     # Load parsed documents
-    docs = load_all_pdfs()
+    docs = load_all_documents()
     # Create chunks
     chunks = create_chunks(docs)
     print(f"Total chunks created: {len(chunks)}")

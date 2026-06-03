@@ -1,4 +1,4 @@
-from parser import load_all_pdfs
+from parser import load_all_documents
 from embedding_pipeline import (create_chunks, EmbeddingModel)
 from langchain_chroma import Chroma
 # Vector Database Class
@@ -18,7 +18,7 @@ class VectorDatabase:
 
 # Testing
 if __name__ == "__main__":
-    docs = load_all_pdfs()
+    docs = load_all_documents()
     # Create chunks
     chunks = create_chunks(docs)
     print(f"Total chunks: {len(chunks)}")

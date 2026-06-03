@@ -4,6 +4,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from dotenv import load_dotenv
 from Voice_input import VoiceInput
 from Image_Input import ImageInput
+from Speech_Output import Speaker
 import os
 # Load Environment Variables
 load_dotenv()
@@ -65,8 +66,8 @@ Metadata:
         11. I want only the final output to be displayed and not your thinking process
         12. The answer must be coherent
         13. Generate the answer after processing data from all the contexts.
-        14. The answer must be presented in an easily readable format by the user and must cover in detail but it must cover everything that is asked in the query but only that focused in detail.
-        15. Do not use any content from the image description for answering the query and use only the bare minimum from the image description while answering the question. Do not use any factual information given from the image description which is not present in the context extracted from the relevant chunks in the database.
+        14. The answer must be presented in an easily readable format by the user and must cover in detail yet concisely.
+        15. (For image based queries)Do not use any content from the image description for answering the query and use only the bare minimum from the image description while answering the question. Do not use any factual information given from the image description which is not present in the context extracted from the relevant chunks in the database.
         Context:
         {context}
         User Question:
@@ -81,7 +82,7 @@ class DroneChatbot:
     # Load LLM
     def load_llm(self):
         self.llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-flash-lite",
+            model="gemini-2.5-flash",
             temperature=0
         )
     # Generate Response
@@ -113,6 +114,7 @@ if __name__ == "__main__":
     voice.load_model()
     print("Voice model loaded successfully.\n")
     image_handler = ImageInput()
+    speaker = Speaker()
     while True:
         print("\n===================================")
         print("1. Text Query")
@@ -197,3 +199,6 @@ if __name__ == "__main__":
         print("================================================\n")
         print(response)
         print("\n")
+        choice = input("Would you like the response to be read out aloud? (y/n): ")
+        if choice.lower() == "y":
+            speaker.speak(response)
